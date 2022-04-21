@@ -139,7 +139,7 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
             'tileSize': 512,
          
         });
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.0});
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5});
         map.setFog({
             'range': [-2, 20],
             'color': 'white',
