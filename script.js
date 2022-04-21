@@ -165,7 +165,7 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
         'maxzoom': 14
         });
         // add the DEM source as a terrain layer with exaggerated height
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 0.5 });
          
         // add a sky layer that will show when the map is highly pitched
         map.addLayer({
