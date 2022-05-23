@@ -147,6 +147,8 @@ draggable: true
 })
 .setLngLat([centerLong, centerLat])
 .addTo(map);
+    
+marker.on('dragend', onDragEnd);
  
   /*   map.on('load', () => {
 
