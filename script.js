@@ -114,6 +114,13 @@ map.setStyle(style);
 }
 
 
+function onDragEnd() {
+const lngLat = marker.getLngLat();
+coordinates.style.display = 'block';
+coordinates.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
+}
+ 
+marker.on('dragend', onDragEnd);
 function startAirportService(centerLong, centerLat,rotateAlt) {
     rotateAltitiude = rotateAlt;
     mapOriginLatitude = centerLong;
@@ -131,6 +138,13 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
         bearing: 0
 
     });
+    
+    const marker = new mapboxgl.Marker({
+draggable: true
+})
+.setLngLat([centerLong, centerLat])
+.addTo(map);
+ 
   /*   map.on('load', () => {
 
         map.addSource('mapbox-dem', {
@@ -157,6 +171,8 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
         });
    
     }); */
+    
+    
     map.on('load', () => {
         map.addSource('mapbox-dem', {
         'type': 'raster-dem',
