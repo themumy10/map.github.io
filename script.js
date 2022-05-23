@@ -123,7 +123,7 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
     rotateAltitiude = rotateAlt;
     map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-v9',
+        style: 'mapbox://styles/mapbox/satellite-streets-v11',
         center: [centerLong, centerLat],
         zoom: 12,
         pitch: 45,
@@ -165,7 +165,7 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
         'maxzoom': 14
         });
         // add the DEM source as a terrain layer with exaggerated height
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 0.5 });
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
          
         // add a sky layer that will show when the map is highly pitched
         map.addLayer({
@@ -292,11 +292,6 @@ function animate() {
     planeAnimationID = requestAnimationFrame(animate);
 
 }
-/*  function dispose() {
-   tb.dispose().then((_)=>{
-
-   });
-} */
 
 
 
@@ -309,111 +304,3 @@ function sayHi() {
 
 
 
-/* 
-function planeFly(startLat, startLong, endLat, endLong, targetLat, targetLong, upper, lower) {
-
-    let plane;
-    let api = {
-        fixedZoom: true,
-        pan: false,
-        maxZoom: 15
-    };
-
-    animate();
-    map.addLayer({
-        id: 'custom_layer',
-        type: 'custom',
-        renderingMode: '3d',
-        onAdd: function (map, mbxContext) {
-
-            // instantiate threebox
-            window.tb = new Threebox(
-                map,
-                map.getCanvas().getContext('webgl'),
-                {
-                    realSunlight: true,
-                    enableSelectingObjects: true, //change this to false to disable 3D objects selection
-                    enableTooltips: true, // change this to false to disable default tooltips on fill-extrusion and 3D models
-                }
-            );
-            tb.altitudeStep = 1;
-            tb.setSunlight(new Date(2021, 0, 18, 12));
-
-            var options = {
-                type: 'gltf',
-                obj: 'plane.glb',
-                scale: 0.5,
-                rotation: { x: 90, y: 0, z: 0 },
-                anchor: 'center',
-                bbox: false
-
-            }
-            if (api.fixedZoom) options.fixedZoom = api.maxZoom;
-            tb.loadObj(options, function (model) {
-                plane = model
-                    .setCoords([targetLat, targetLong, lower]);
-                plane.setRotation({ x: 0, y: 0, z: 135 })
-                plane.addEventListener('ObjectChanged', onObjectChanged, false);
-                plane.castShadow = true;
-                tb.add(plane);
-
-                fly(tb, [[
-                    startLat, startLong, upper
-                ]
-                    , [
-                    endLat, endLong, lower
-                ]
-
-                ]);
-
-            })
-        },
-
-        render: function (gl, matrix) {
-            tb.update();
-        }
-    })
-
-
-    let line;
-    function onObjectChanged(e) {
-        let model = e.detail.object; //here's the object already modified
-        if (api.pan) map.panTo(model.coordinates);
-    }
-
-
-    function fly(tb, pathForFly) {
-        // extract path geometry from callback geojson, and set duration of travel
-        var options = {
-            path: pathForFly,
-            duration: 20000
-        }
-        try {
-            // start the truck animation with above options, and remove the line when animation ends
-            plane.followPath(
-                options,
-                async function () {
-                    tb.remove(line);
-                    tb.remove(plane);
-                    tb.removeLayer("custom-layer")
-                    await tb.clear(["custom-layer", true]) 
-
-                }
-            );
-        } catch (error) {
-            JavascriptChannel.postMessage(error);
-        }
-
-
-        // set up geometry for a line to be added to map, lofting it up a bit for *style*
-        let lineGeometry = options.path;
-
-        // create and add line object
-        line = tb.line({
-            geometry: lineGeometry,
-            width: 5,
-            color: 'steelblue'
-        })
-        tb.add(line, "custom-layer");
-    }
-} */
