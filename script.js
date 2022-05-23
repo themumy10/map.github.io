@@ -22,7 +22,10 @@ let rotateAltitiude;
 
 let thresoldLat;
 let thresoldLong;
-var approachAnimationId = null;/* 
+var approachAnimationId = null;
+
+const coordinates = document.getElementById('coordinates');
+/* 
 function startService(centerLat, centerLong, rotateAlt, heading,thresoldLatTemp,thresoldLongTemp,) {
     mapOriginLatitude = centerLat;
     mapOriginLongitude = centerLong;
