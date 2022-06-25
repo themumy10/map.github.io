@@ -135,7 +135,7 @@ function startAirportService(centerLong, centerLat,rotateAlt) {
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v11',
         center: [centerLong, centerLat],
-        zoom: 12,
+        zoom: 4,
         pitch: 45,
         antialias: true,
         bearing: 0
