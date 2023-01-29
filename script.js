@@ -212,6 +212,98 @@ marker.on('dragend', onDragEnd);
         JavascriptChannel.postMessage("context restored");
     });
 }
+
+
+
+function startWaypointService(centerLong, centerLat,rotateAlt) {
+    rotateAltitiude = rotateAlt;
+    mapOriginLatitude = centerLong;
+    mapOriginLongitude = centerLat;
+    thresoldLat=centerLong;
+    thresoldLong=centerLat;
+    rotateAltitiude = rotateAlt;
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-streets-v11',
+        center: [centerLong, centerLat],
+        zoom: 18,
+        pitch: 45,
+        antialias: true,
+        bearing: 0
+
+    });
+    
+    const marker = new mapboxgl.Marker({
+draggable: true
+})
+.setLngLat([centerLong, centerLat])
+.addTo(map);
+    
+    
+    
+marker.on('dragend', onDragEnd);
+ 
+  /*   map.on('load', () => {
+        map.addSource('mapbox-dem', {
+            'type': 'raster-dem',
+            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            'tileSize': 512,
+         
+        });
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5});
+        map.setFog({
+            'range': [-2, 20],
+            'color': 'white',
+            'horizon-blend': 0.1
+        }); 
+        map.addLayer({
+            'id': 'sky',
+            'type': 'sky',
+            'paint': {
+                'sky-type': 'atmosphere',
+                'sky-atmosphere-sun': [0.0, 90.0],
+                'sky-atmosphere-sun-intensity': 15
+            }
+        });
+   
+    }); */
+    
+    
+    map.on('load', () => {
+        map.addSource('mapbox-dem', {
+        'type': 'raster-dem',
+        'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+        'tileSize': 512,
+        'maxzoom': 14
+        });
+        // add the DEM source as a terrain layer with exaggerated height
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+         
+        // add a sky layer that will show when the map is highly pitched
+        map.addLayer({
+        'id': 'sky',
+        'type': 'sky',
+        'paint': {
+        'sky-type': 'atmosphere',
+        'sky-atmosphere-sun': [0.0, 0.0],
+        'sky-atmosphere-sun-intensity': 15
+        }
+        });
+        });
+    map.on('error', (c) => {
+        JavascriptChannel.postMessage("map error");
+        JavascriptChannel.postMessage(c.toString());
+    });
+    map.on('webglcontextlost', () => {
+        JavascriptChannel.postMessage("context lost");
+    });
+    map.on('webglcontextrestored', () => {
+        JavascriptChannel.postMessage("context restored");
+    });
+}
+
+
+
 function updateCameraPosition(position, altitude, target) {
     const camera = map.getFreeCameraOptions();
 
