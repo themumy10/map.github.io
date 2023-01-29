@@ -148,29 +148,7 @@ draggable: true
 .setLngLat([centerLong, centerLat])
 .addTo(map);
     
-    function startWaypointService(centerLong, centerLat,rotateAlt) {
-    rotateAltitiude = rotateAlt;
-    mapOriginLatitude = centerLong;
-    mapOriginLongitude = centerLat;
-    thresoldLat=centerLong;
-    thresoldLong=centerLat;
-    rotateAltitiude = rotateAlt;
-    map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-streets-v11',
-        center: [centerLong, centerLat],
-        zoom: 14,
-        pitch: 45,
-        antialias: true,
-        bearing: 0
-
-    });
     
-    const marker = new mapboxgl.Marker({
-draggable: true
-})
-.setLngLat([centerLong, centerLat])
-.addTo(map);
     
 marker.on('dragend', onDragEnd);
  
